@@ -1,14 +1,15 @@
 library(shiny)
+library(ggplot2)
 
-# Define server logic required to draw a histogram
+
 shinyServer(function(input, output) {
 
     output$Plot <- renderPlot({
 
-        # generate bins based on input$bins from ui.R
         x = seq(1, 100)
+        y0 = input$intercept + input$slope * x
         y = input$intercept + input$slope * x + rnorm(100, input$mean, input$std)
-        plot(x, y)
+        ggplot(NULL, aes(x = x, y = c(y0, y))) + geom_point(size = 2) 
 
     })
 
